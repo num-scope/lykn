@@ -1,0 +1,22 @@
+services:
+  server:
+    build:
+      context: ./backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./backend/config/config.compose.yaml:/app/config/config.yaml:ro"
+    environment:
+      - LYKN_CONFIG=/app/config/config.yaml
+
+  postgres:
+    image: postgres:16
+    volumes:
+      - "pgdata:/var/lib/postgresql/data"
+    environment:
+      - POSTGRES_DB=lykn
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+
+volumes:
+  pgdata:

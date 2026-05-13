@@ -1,0 +1,24 @@
+server:
+  # Gin HTTP 服务监听端口
+  port: 8080
+  # 允许跨域访问的前端 Origin，本地开发可使用 http://localhost:5173
+  allow_origin: "*"
+
+database:
+  # PostgreSQL 连接配置
+  host: localhost
+  port: 5432
+  dbname: lykn
+  username: postgres
+  password: 123456
+
+auth:
+  # 用于签名登录 Bearer Token，非本地环境请使用足够长的随机值
+  secret_key: dev-auth-secret-key
+  # Bearer Token 有效期，使用 Go duration 格式，例如 30m、24h、168h
+  expire: 24h
+
+encryption:
+  # 用于加密数据库中的项目私钥
+  # 必须与 auth.secret_key 分开，不要随意轮换
+  secret_key: dev-encryption-secret-key

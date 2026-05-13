@@ -1,0 +1,35 @@
+{
+  "id": "fixture-uuid-001",
+  "version": 1,
+  "subject": {
+    "name": "Fixture Test Corp",
+    "email": "admin@fixture.test",
+    "organization": "Fixture Test Corp"
+  },
+  "plan": "enterprise",
+  "plan_name": "Enterprise Plan",
+  "issued_at": "2026-04-01T00:00:00Z",
+  "not_before": "2026-04-01T00:00:00Z",
+  "not_after": "2027-04-01T00:00:00Z",
+  "hardware": {
+    "hostname": "fixture-host",
+    "cpu_id": "CPU-FIXTURE-001",
+    "disk_serial": "DISK-FIXTURE-001",
+    "mac_addresses": [
+      "AA:BB:CC:DD:EE:FF"
+    ]
+  },
+  "features": [
+    "reports",
+    "exports"
+  ],
+  "limits": {
+    "max_users": 20,
+    "max_devices": 1
+  },
+  "metadata": {
+    "customer_id": "cust_fixture_001",
+    "environment": "demo",
+    "issued_by": "backend/cmd/demo"
+  }
+}

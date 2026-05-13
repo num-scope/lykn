@@ -1,0 +1,17 @@
+server:
+  port: 8080
+  allow_origin: "*"
+
+database:
+  host: postgres
+  port: 5432
+  dbname: lykn
+  username: postgres
+  password: 123456
+
+auth:
+  secret_key: dev-auth-secret-key
+  expire: 24h
+
+encryption:
+  secret_key: dev-encryption-secret-key

@@ -1,11 +1,12 @@
 # Lykn
 
-Python 项目授权平台。管理 license 的签发与验证。
+跨语言项目授权平台。管理 license 的签发与验证。
 
 ## 项目结构
 
 - `backend/` — Go 管理平台后端
 - `sdk/python/` — Python 验证 SDK
+- `sdk/go/` — Go 验证 SDK
 - `frontend/` — 前端（Antdv Next）
 
 ## Backend 开发

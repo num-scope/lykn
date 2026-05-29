@@ -2,6 +2,8 @@
 
 跨语言项目授权平台。管理 license 的签发与验证。
 
+![Admin 管理界面](admin.png)
+
 ## 项目结构
 
 - `backend/` — Go 管理平台后端
@@ -27,17 +29,6 @@ make demo
 ```
 
 `make demo` 会重新生成跨语言测试 fixture：`tests/fixtures/public.pem`、`tests/fixtures/license.lic` 和完整的 `tests/fixtures/license.json`。
-
-### 已提供接口
-
-- `POST /api/v1/auth/login`
-- `GET/POST/PUT/DELETE /api/v1/features`
-- `GET/POST/PUT/DELETE /api/v1/plans`
-- `GET/POST/PUT/DELETE /api/v1/projects`
-- `GET /api/v1/projects/:id/public-key`
-- `GET/POST /api/v1/projects/:id/licenses`
-- `GET /api/v1/licenses/:id`
-- `GET /api/v1/licenses/:id/download`
 
 ## Frontend 开发
 

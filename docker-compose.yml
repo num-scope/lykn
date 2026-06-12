@@ -1,22 +1,46 @@
 services:
   server:
     build:
-      context: ./backend
+      context: .
+      args:
+        VITE_API_BASE: /api/v1
+        HTTP_PROXY: ${HTTP_PROXY:-}
+        HTTPS_PROXY: ${HTTPS_PROXY:-}
+        ALL_PROXY: ${ALL_PROXY:-}
+        NO_PROXY: ${NO_PROXY:-}
+        http_proxy: ${http_proxy:-}
+        https_proxy: ${https_proxy:-}
+        all_proxy: ${all_proxy:-}
+        no_proxy: ${no_proxy:-}
+    init: true
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
     ports:
       - "8080:8080"
     volumes:
-      - "./backend/config/config.compose.yaml:/app/config/config.yaml:ro"
+      - "./config/config.compose.yaml:/app/config/config.yaml:ro"
     environment:
-      - LYKN_CONFIG=/app/config/config.yaml
+      LYKN_CONFIG: /app/config/config.yaml
+      LYKN_WEB_DIST: /app/frontend/dist
+      GIN_MODE: release
 
   postgres:
     image: postgres:16
+    restart: unless-stopped
     volumes:
       - "pgdata:/var/lib/postgresql/data"
     environment:
-      - POSTGRES_DB=lykn
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=123456
+      POSTGRES_DB: lykn
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d lykn"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
 
 volumes:
   pgdata:

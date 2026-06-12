@@ -71,7 +71,7 @@ def test_verify_returns_license_data(rsa_materials):
     assert validator.has_feature("exports") is True
 
 
-def test_verify_accepts_backend_style_hardware_payload(rsa_materials, monkeypatch):
+def test_verify_accepts_server_style_hardware_payload(rsa_materials, monkeypatch):
     private_key, public_pem = rsa_materials
     lic_content = build_signed_license(
         private_key=private_key,

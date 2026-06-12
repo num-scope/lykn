@@ -1,22 +1,55 @@
 services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        VITE_API_BASE: /api/v1
+    depends_on:
+      server:
+        condition: service_healthy
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    restart: unless-stopped
+
   server:
     build:
-      context: ./backend
-    ports:
-      - "8080:8080"
+      context: .
+      dockerfile: Dockerfile
+    init: true
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    expose:
+      - "8080"
     volumes:
-      - "./backend/config/config.compose.yaml:/app/config/config.yaml:ro"
+      - "./config/config.compose.yaml:/app/config/config.yaml:ro"
     environment:
-      - LYKN_CONFIG=/app/config/config.yaml
+      LYKN_CONFIG: /app/config/config.yaml
+      GIN_MODE: release
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/health >/dev/null || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
 
   postgres:
     image: postgres:16
+    restart: unless-stopped
     volumes:
       - "pgdata:/var/lib/postgresql/data"
     environment:
-      - POSTGRES_DB=lykn
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=123456
+      POSTGRES_DB: lykn
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d lykn"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
 
 volumes:
   pgdata:

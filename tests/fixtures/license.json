@@ -30,6 +30,6 @@
   "metadata": {
     "customer_id": "cust_fixture_001",
     "environment": "demo",
-    "issued_by": "backend/cmd/demo"
+    "issued_by": "cmd/demo"
   }
 }

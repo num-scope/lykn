@@ -9,7 +9,7 @@ server
 coverage.out
 tmp/
 bin/
-config/config.yaml
+backend/
 frontend/.DS_Store
 frontend/.env
 frontend/.env.*

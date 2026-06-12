@@ -6,21 +6,22 @@
 
 ## 项目结构
 
-- `api/`、`cmd/`、`config/`、`database/`、`internal/`、`pkg/` — Go 管理平台主应用
+- `backend/` — Go 管理平台后端
 - `sdk/python/` — Python 验证 SDK
 - `sdk/go/` — Go 验证 SDK
 - `frontend/` — 前端（Antdv Next）
 
-## 主应用开发
+## Backend 开发
 
-1. 复制 `config/config.yaml.example` 为 `config/config.yaml`
+1. 复制 `backend/config/config.yaml.example` 为 `backend/config/config.yaml`
 2. 启动 PostgreSQL，或使用 `docker compose up postgres`
-3. 在仓库根目录运行 `make run`
+3. 进入 `backend/` 目录运行 `make run`
 4. 默认用户：`admin / admin123`（仅开发环境，启动后请立即修改）
 
 常用命令：
 
 ```bash
+cd backend
 make help
 make test
 make build
@@ -57,4 +58,4 @@ docker compose down -v
 - `server`：Go API 服务，仅在 Compose 网络内监听 `8080`
 - `frontend`：Nginx 前端服务，监听 `http://127.0.0.1:8080`
 
-本地 `make run` 使用 `config/config.yaml`。Compose 使用 `config/config.compose.yaml`，后端所有配置都从 YAML 读取。
+本地 `make run` 使用 `backend/config/config.yaml`。Compose 使用 `backend/config/config.compose.yaml`，后端所有配置都从 YAML 读取。

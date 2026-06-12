@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestVerifyServerSignedFixture(t *testing.T) {
+func TestVerifyBackendSignedFixture(t *testing.T) {
 	fixtureDir := filepath.Join("..", "..", "tests", "fixtures")
 	publicPEM, err := os.ReadFile(filepath.Join(fixtureDir, "public.pem"))
 	if err != nil {

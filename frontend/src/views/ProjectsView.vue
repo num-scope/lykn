@@ -370,7 +370,7 @@ const projectActions = (project: ProjectRecord): AdminRowAction<ProjectRecord>[]
           <a-alert
             type="info"
             show-icon
-            message="将此公钥集成到 Python SDK 或 CLI，用于验证下载的 license 文件。"
+            message="将此公钥集成到客户端 SDK、服务端组件或 CLI，用于验证下载的 license 文件。"
           />
           <pre
             class="max-h-[420px] overflow-auto rounded-2 bg-[var(--surface-2)] p-4 text-left text-xs leading-6"

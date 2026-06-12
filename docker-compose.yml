@@ -14,7 +14,7 @@ services:
 
   server:
     build:
-      context: .
+      context: ./backend
       dockerfile: Dockerfile
     init: true
     restart: unless-stopped
@@ -24,7 +24,7 @@ services:
     expose:
       - "8080"
     volumes:
-      - "./config/config.compose.yaml:/app/config/config.yaml:ro"
+      - "./backend/config/config.compose.yaml:/app/config/config.yaml:ro"
     environment:
       LYKN_CONFIG: /app/config/config.yaml
       GIN_MODE: release

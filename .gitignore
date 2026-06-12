@@ -7,7 +7,7 @@
 *.test
 *.out
 vendor/
-/server
+backend/server
 
 # Python
 __pycache__/

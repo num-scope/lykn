@@ -112,4 +112,7 @@ func TestHealthAndCORS(t *testing.T) {
 	if got := w.Header().Get("Access-Control-Allow-Origin"); got != "http://localhost:5173" {
 		t.Fatalf("allow origin = %q, want http://localhost:5173", got)
 	}
+	if got := w.Header().Get("Access-Control-Allow-Headers"); got != "Authorization,Content-Type,X-Request-Id" {
+		t.Fatalf("allow headers = %q, want Authorization,Content-Type,X-Request-Id", got)
+	}
 }

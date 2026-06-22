@@ -50,6 +50,8 @@ docs/
 **/.env
 **/.env.*
 !**/.env.example
+!frontend/.env.prod
+!frontend/.env.test
 
 # Test / Coverage
 htmlcov/

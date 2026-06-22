@@ -12,7 +12,8 @@ bin/
 backend/
 frontend/.DS_Store
 frontend/.env
-frontend/.env.*
+frontend/.env.local
+frontend/.env.*.local
 frontend/dist/
 frontend/node_modules/
 sdk/

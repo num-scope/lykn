@@ -1,0 +1,24 @@
+@import './reset.css';
+@import './nprogress.css';
+@import './transition.css';
+@import './antdv-next-adapter.css';
+
+html,
+body,
+#app {
+  height: 100%;
+  text-autospace: normal;
+}
+
+html {
+  overflow-x: hidden;
+  color: rgb(var(--base-text-color));
+}
+
+:root {
+  --surface-1: rgb(var(--container-bg-color));
+  --surface-2: rgb(var(--layout-bg-color));
+  --surface-border: rgb(var(--base-text-color) / 0.12);
+  --text-primary: rgb(var(--base-text-color));
+  --text-secondary: rgb(var(--base-text-color) / 0.65);
+}

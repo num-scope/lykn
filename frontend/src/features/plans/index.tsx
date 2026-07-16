@@ -11,6 +11,7 @@ import {
 import { formatDateTime, getErrorMessage } from '@/lib/lykn'
 import type { FeatureRecord, PlanPayload, PlanRecord } from '@/types/api'
 import { ConfirmDialog } from '@/components/confirm-dialog'
+import { FieldLabelTip } from '@/components/field-label-tip'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
@@ -376,7 +377,7 @@ export function PlansPage() {
             </div>
             <div className='grid grid-cols-2 gap-3'>
               <div className='grid gap-2'>
-                <Label>用户额度</Label>
+                <FieldLabelTip tip='0 表示不限制用户数'>用户额度</FieldLabelTip>
                 <Input
                   type='number'
                   min={0}
@@ -385,7 +386,6 @@ export function PlansPage() {
                     setForm((s) => ({ ...s, max_users: Number(e.target.value) }))
                   }
                 />
-                <p className='text-xs text-muted-foreground'>0 表示不限制</p>
               </div>
               <div className='grid gap-2'>
                 <Label>设备额度</Label>

@@ -1,23 +1,39 @@
 GO ?= go
 CONFIG ?= config/config.yaml
-BINARY ?= server
 DOCKER_IMAGE ?= lykn-server:dev
 DEMO_OUT ?= ../tests/fixtures
+
+# Windows (cmd + ezwinports/mingw make) vs Unix shell
+ifeq ($(OS),Windows_NT)
+	BINARY ?= server.exe
+	RM = del /Q
+	RMDIR = rmdir /S /Q
+	NULL = NUL
+	SET_CONFIG = set "LYKN_CONFIG=$(CONFIG)"&&
+else
+	BINARY ?= server
+	RM = rm -f
+	RMDIR = rm -rf
+	NULL = /dev/null
+	SET_CONFIG = LYKN_CONFIG=$(CONFIG)
+endif
 
 .PHONY: help run test build clean fmt demo docker-build
 
 help:
-	@printf "Lykn server make targets:\n"
-	@printf "  make run          Run the HTTP server with LYKN_CONFIG=%s\n" "$(CONFIG)"
-	@printf "  make test         Run all Go tests\n"
-	@printf "  make build        Build server binary to %s\n" "$(BINARY)"
-	@printf "  make clean        Remove build output\n"
-	@printf "  make fmt          Run gofmt on all tracked Go packages\n"
-	@printf "  make demo         Generate complete demo fixtures in %s\n" "$(DEMO_OUT)"
-	@printf "  make docker-build Build backend Docker image %s\n" "$(DOCKER_IMAGE)"
+	@echo Lykn server make targets:
+	@echo   make run          Run the HTTP server with LYKN_CONFIG=$(CONFIG)
+	@echo   make test         Run all Go tests
+	@echo   make build        Build server binary to $(BINARY)
+	@echo   make clean        Remove build output
+	@echo   make fmt          Run gofmt on all tracked Go packages
+	@echo   make demo         Generate complete demo fixtures in $(DEMO_OUT)
+	@echo   make docker-build Build backend Docker image $(DOCKER_IMAGE)
+	@echo.
+	@echo Windows PowerShell alternative:  .\dev.ps1 help
 
 run:
-	LYKN_CONFIG=$(CONFIG) $(GO) run ./cmd/server
+	$(SET_CONFIG) $(GO) run ./cmd/server
 
 test:
 	$(GO) test ./...
@@ -26,8 +42,14 @@ build:
 	$(GO) build -o $(BINARY) ./cmd/server
 
 clean:
-	rm -f $(BINARY)
-	rm -rf bin
+ifeq ($(OS),Windows_NT)
+	-if exist $(BINARY) $(RM) $(BINARY)
+	-if exist server $(RM) server
+	-if exist bin $(RMDIR) bin
+else
+	-$(RM) $(BINARY)
+	-$(RMDIR) bin
+endif
 
 fmt:
 	$(GO) fmt ./...

@@ -15,20 +15,34 @@
 
 1. 复制 `backend/config/config.yaml.example` 为 `backend/config/config.yaml`
 2. 启动 PostgreSQL，或使用 `docker compose up postgres`
-3. 进入 `backend/` 目录运行 `make run`
+3. 进入 `backend/` 目录启动服务（见下方命令）
 4. 默认用户：`admin / admin123`（仅开发环境，启动后请立即修改）
 
-常用命令：
+### Windows（推荐 PowerShell）
+
+```powershell
+cd backend
+.\dev.ps1 help
+.\dev.ps1 run
+.\dev.ps1 test
+.\dev.ps1 build
+.\dev.ps1 demo
+```
+
+若已安装 GNU Make（如 winget 的 ezwinports.make），也可直接使用 `make run` / `make test` 等；Makefile 已兼容 Windows。
+
+### macOS / Linux
 
 ```bash
 cd backend
 make help
+make run
 make test
 make build
 make demo
 ```
 
-`make demo` 会重新生成跨语言测试 fixture：`tests/fixtures/public.pem`、`tests/fixtures/license.lic` 和完整的 `tests/fixtures/license.json`。
+`make demo` / `.\dev.ps1 demo` 会重新生成跨语言测试 fixture：`tests/fixtures/public.pem`、`tests/fixtures/license.lic` 和完整的 `tests/fixtures/license.json`。
 
 ## Frontend 开发
 
@@ -58,4 +72,4 @@ docker compose down -v
 - `server`：Go API 服务，仅在 Compose 网络内监听 `8080`
 - `frontend`：Nginx 前端服务，监听 `http://127.0.0.1:8080`
 
-本地 `make run` 使用 `backend/config/config.yaml`。Compose 使用 `backend/config/config.compose.yaml`，后端所有配置都从 YAML 读取。
+本地 `make run` / `.\dev.ps1 run` 使用 `backend/config/config.yaml`。Compose 使用 `backend/config/config.compose.yaml`，后端所有配置都从 YAML 读取。

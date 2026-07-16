@@ -9,12 +9,12 @@
 - `backend/` — Go 管理平台后端
 - `sdk/python/` — Python 验证 SDK
 - `sdk/go/` — Go 验证 SDK
-- `frontend/` — 前端（Antdv Next）
+- `frontend/` — 前端（shadcn/ui + React + Vite）
 
 ## Backend 开发
 
 1. 复制 `backend/config/config.yaml.example` 为 `backend/config/config.yaml`
-2. 启动 PostgreSQL，或使用 `docker-compose up postgres`
+2. 启动 PostgreSQL，或使用 `docker compose up postgres`
 3. 进入 `backend/` 目录运行 `make run`
 4. 默认用户：`admin / admin123`（仅开发环境，启动后请立即修改）
 
@@ -32,23 +32,30 @@ make demo
 
 ## Frontend 开发
 
-1. 复制 `frontend/.env.example` 为 `frontend/.env`
-2. 进入 `frontend/` 目录运行 `pnpm dev`
-3. `frontend/.env` 必须提供 `VITE_API_BASE`，代码不会为该变量设置默认值；跨域由后端 CORS 处理
+1. 复制 `frontend/.env.example` 为 `frontend/.env`，设置 `VITE_API_BASE`（本地默认 `http://127.0.0.1:8080/api/v1`）
+2. 进入 `frontend/` 目录运行 `pnpm install` 与 `pnpm dev`
+3. 默认账号：`admin / admin123`；跨域由后端 CORS 处理；生产构建使用 `pnpm build`
 
 ## Docker Compose
 
-当前 compose 只覆盖后端链路，故意不包含 `frontend/`。
+Docker Compose 会同时启动前端、后端和 PostgreSQL。前端由 Nginx 容器提供页面，并把 `/api/` 请求反向代理到 Go 后端。
 
 ```bash
-docker-compose up -d --build
-docker-compose logs -f server
-docker-compose down -v
+zsh -ic 'proxy; docker compose up -d --build'
+```
+
+如果 Docker Hub 与 npm 访问稳定，也可以直接运行：
+
+```bash
+docker compose up -d --build
+docker compose logs -f server
+docker compose down -v
 ```
 
 默认服务：
 
 - `postgres`：`postgres:16`
-- `server`：Go 管理后端，监听 `http://127.0.0.1:8080`
+- `server`：Go API 服务，仅在 Compose 网络内监听 `8080`
+- `frontend`：Nginx 前端服务，监听 `http://127.0.0.1:8080`
 
 本地 `make run` 使用 `backend/config/config.yaml`。Compose 使用 `backend/config/config.compose.yaml`，后端所有配置都从 YAML 读取。

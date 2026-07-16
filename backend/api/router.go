@@ -7,6 +7,7 @@ import (
 	v1 "github.com/wu-clan/lykn/backend/api/v1"
 	"github.com/wu-clan/lykn/backend/config"
 	"github.com/wu-clan/lykn/backend/internal/middleware"
+	"github.com/wu-clan/lykn/backend/pkg/response"
 )
 
 func RegisterRoutes(cfg *config.Config) *gin.Engine {
@@ -51,6 +52,10 @@ func RegisterRoutes(cfg *config.Config) *gin.Engine {
 	secure.POST("/projects/:id/licenses", v1.IssueLicense)
 	secure.GET("/licenses/:id", v1.GetLicense)
 	secure.GET("/licenses/:id/download", v1.DownloadLicense)
+
+	router.NoRoute(func(c *gin.Context) {
+		response.Error(c, http.StatusNotFound, "not found")
+	})
 
 	return router
 }

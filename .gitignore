@@ -33,6 +33,13 @@ wheels/
 venv/
 .ruff_cache/
 
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/coverage/
+frontend/**/__screenshots__/
+frontend/.vitest-attachments/
+
 # IDE
 .idea/
 .vscode/
